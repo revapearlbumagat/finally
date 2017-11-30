@@ -1,0 +1,88 @@
+@import url('https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,700');
+
+.animated { animation-duration: 500ms; }
+
+.wip {
+  text-align: center;
+  padding: 40px;
+  background: #000;
+  color: #fff;
+}
+
+
+// base styles
+body {
+  background-color: #f9f9f9;
+}
+
+.loading {
+  max-width: 400px;
+  margin: 100px auto 0 auto;
+  text-align: center;
+  font-size: 18px;
+}
+
+.wrapper {
+  padding: 50px;
+  font-family: 'Source Sans Pro', arial, sans-serif;
+}
+
+.app {
+  margin: auto;
+  max-width: 800px;
+  padding: 25px;
+  border: 1px solid #ccc;
+  box-shadow: 4px 4px 12px rgba(0,0,0,.12);
+}
+
+header {
+  h2 {
+    margin: 0;
+    padding-bottom: .25em;
+    margin-bottom: 1em;
+    border-bottom: 1px solid;
+    font-weight: 300;
+  }
+}
+
+.btn,
+.form-control {
+  border-radius: 0;
+  box-shadow: none;
+  outline: none;
+}
+
+.list-group-item {
+  border-radius: 0!important;
+  margin-bottom: 1px;
+  
+  input[type="checkbox"] {
+    margin-right: 4px;
+  }
+  
+  &.completed {
+    border-color: #8FB339;
+    color: #8FB339;
+  }
+}
+
+.add-form {
+  input {
+    flex-grow: 2;
+    &::placeholder {
+      color: #aaa;
+    }
+  }
+  button {
+    cursor: pointer;
+  }
+}
+
+.items {
+  margin-top: 1.5em;
+  
+  li button {
+    margin-left: auto;
+    cursor: pointer;
+  }
+}

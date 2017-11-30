@@ -1,0 +1,157 @@
+const mountNode = document.getElementById("root");
+
+const sampleTodos = [
+  {
+    text: "Learn More Node.js",
+    done: false
+  },
+  {
+    text: "Learn React",
+    done: true
+  },
+  {
+    text: "Learn Redux",
+    done: false
+  }
+];
+
+class App extends React.Component {
+  constructor() {
+    super();
+
+    this.state = {
+      todos: [...sampleTodos],
+      showIncompleteFirst: true
+    };
+  }
+
+  addTodo = () => {
+    if (this.todoInput.value !== "") {
+      this.setState({
+        todos: [
+          ...this.state.todos,
+          { text: this.todoInput.value, done: false }
+        ]
+      });
+    }
+  };
+
+  deleteTodo = index => {
+    let todosCopy = [...this.state.todos];
+
+    if (todosCopy.length > 0) {
+      todosCopy.splice(index, 1);
+    }
+
+    this.setState({
+      todos: [...todosCopy]
+    });
+  };
+
+  toggleDone = (isDone, indexMatch) => {
+    const filterTodos = this.state.todos.map((item, index) => {
+      if (index === indexMatch) {
+        item.done = isDone;
+      }
+
+      return item;
+    });
+
+    this.setState({
+      todos: [...filterTodos]
+    });
+  };
+
+  render() {
+    // const todos = [...this.state.todos];
+    let sortedTodos;
+    if (this.state.showIncompleteFirst) {
+      sortedTodos = this.state.todos.sort(
+        (prev, curr) => prev.done - curr.done
+      );
+    } else {
+      sortedTodos = this.state.todos.sort(
+        (prev, curr) => curr.done - prev.done
+      );
+    }
+    return (
+      <div className="app animated slideInDown">
+        <header>
+          <h2 className="text-primary">Reactify TODO</h2>
+        </header>
+
+        <form
+          className="form-inline add-form"
+          onSubmit={e => {
+            e.preventDefault();
+            this.addTodo();
+          }}
+        >
+          <input
+            type="text"
+            className="form-control"
+            placeholder="todo item"
+            ref={input => {
+              this.todoInput = input;
+            }}
+          />
+          <button type="submit" className="btn btn-primary">+</button>
+        </form>
+        <div className="text-right text-muted mt-2">
+          <label>
+            <input
+              className="mr-1"
+              type="checkbox"
+              checked={this.state.showIncompleteFirst}
+              onChange={() =>
+                this.setState({
+                  showIncompleteFirst: !this.state.showIncompleteFirst
+                })}
+            />
+            {" "}
+            Show incomplete first
+          </label>
+        </div>
+
+        <ul className="list-group items">
+
+          {sortedTodos.map((todo, index) => {
+            return (
+              <li
+                className={"list-group-item" + (todo.done ? " completed" : "")}
+                key={index}
+              >
+                <label>
+                  <input
+                    type="checkbox"
+                    checked={todo.done ? "checked" : ""}
+                    onChange={e => {
+                      const isDone = e.target.checked;
+
+                      this.toggleDone(isDone, index);
+                    }}
+                  />
+                  {todo.text}
+                </label>
+                <button
+                  type="button"
+                  className="btn btn-danger btn-sm"
+                  onClick={() => {
+                    this.deleteTodo(index);
+                  }}
+                >
+                  ×
+                </button>
+              </li>
+            );
+          })}
+
+        </ul>
+
+      </div>
+    );
+  }
+}
+
+// mount React components
+ReactDOM.render(<App />, mountNode);
